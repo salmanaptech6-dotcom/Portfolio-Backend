@@ -24,6 +24,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5173",
+  "https://salmanbanisai.netlify.app/",
 ];
 
 app.use(
@@ -95,10 +96,12 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
-  console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
-});
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Allowed origins: ${allowedOrigins.join(", ")}`);
+  });
+}
 
 process.on("SIGINT", () => {
   console.log("\n Shutting down gracefully...");
